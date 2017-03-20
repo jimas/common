@@ -3,7 +3,10 @@ package com.jimas.common.util;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 
 public class DateUtil {
@@ -97,7 +100,70 @@ public class DateUtil {
         }
         return d;
     }
+    /**
+     * 功能：获取起始日期和终止日期之间的日期(包含起始和终止日期)
+     * 
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    public static Set<String> getDayList(Date startDate, Date endDate) {
+        long begin = startDate.getTime();
+        long end = endDate.getTime();
+        long inter = end - begin;
+        if (inter < 0) {
+            inter = inter * (-1);
+        }
+        long dateMillSec = 86400000;
+        long dateCnt = inter / dateMillSec;
+        Set<String> set = new LinkedHashSet<String>();
+        Calendar cl = Calendar.getInstance();
+        cl.setTime(startDate);
+        cl.set(Calendar.HOUR_OF_DAY, 0);
+        cl.set(Calendar.MINUTE, 0);
+        cl.set(Calendar.SECOND, 0);
+        cl.set(Calendar.MILLISECOND, 0);
+        set.add(getDateFormat(cl.getTime()));
+        for (int i = 1; i <= dateCnt; i++) {
+            cl.add(Calendar.DAY_OF_YEAR, 1);
+            set.add(getDateFormat(cl.getTime()));
+        }
+        set.add(getDateFormat(endDate));
+        return set;
+    }
     
+    /**
+     * 功能：获取yyyyMMdd的年月日
+     * 
+     * @param date
+     * @return
+     */
+    private static String getShortDate(Date date) {
+        SimpleDateFormat df = new SimpleDateFormat(SHORT_DATE_FORMAT);
+        return df.format(date);
+    }
+
+    /**
+     * 功能：获取yyyyMM的年月
+     * 
+     * @param date
+     * @return
+     */
+    public static String getShortMonth(Date date) {
+        SimpleDateFormat df = new SimpleDateFormat(SHORT_MONTH_FORMAT);
+        return df.format(date);
+    }
+    /**
+     * 功能：获取yyyy-MM-dd的年月日
+     * 
+     * @param date
+     * @return
+     */
+    public static String getDateFormat(Date date) {
+        SimpleDateFormat df = new SimpleDateFormat(DATE_FORMAT);
+        return df.format(date);
+    }
+
     /* 
      * 将时间转换为时间戳
      */    
