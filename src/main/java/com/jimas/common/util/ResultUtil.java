@@ -41,7 +41,7 @@ public class ResultUtil {
 	 */
 	public static ResultVo<Object> initResultVo(Integer status, Object result){
 		if(null==status) status = 200;
-		return new ResultVo<Object>(status, ResultStatusEnum.getMessage(status),result);
+		return new ResultVo<Object>(status, ResultStatusEnum.getMessage(status), result);
 	}
 	
 	/**

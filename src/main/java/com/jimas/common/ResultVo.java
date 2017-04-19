@@ -18,7 +18,7 @@ public class ResultVo<T> implements Serializable {
 		this.message = message;
 		this.result = result;
 	}
-	public int getStatus() {
+    public int getStatus() {
 		return status;
 	}
 	public void setStatus(int status) {
